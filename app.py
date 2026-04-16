@@ -15,7 +15,7 @@ api_key = os.getenv("OPENAI_API_KEY")
 
 @st.cache_resource
 def process_pdf():
-    loader = PyPDFLoader("../data/2024_KB_부동산_보고서_최종.pdf")
+    loader = PyPDFLoader("2024_KB_부동산_보고서_최종.pdf")
     documents = loader.load()
     text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
     return text_splitter.split_documents(documents)
