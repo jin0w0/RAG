@@ -1,6 +1,5 @@
 import os
 import streamlit as st
-from dotenv import load_dotenv
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_openai import OpenAIEmbeddings, ChatOpenAI
@@ -11,7 +10,7 @@ from langchain_core.runnables import RunnablePassthrough, RunnableWithMessageHis
 from langchain_community.chat_message_histories import ChatMessageHistory
 from langchain_core.messages import trim_messages
 
-load_dotenv("../data/.env")
+
 api_key = os.getenv("OPENAI_API_KEY")
 
 @st.cache_resource
@@ -98,19 +97,6 @@ def main():
                 st.markdown(response)
             st.session_state.messages.append({"role": "assistant", "content": response})
 
-from pyngrok import ngrok
+
 if __name__ == "__main__":
-    # 1. 현재 열려있는 ngrok 터널이 있는지 확인 (Streamlit 재실행 시 중복 생성 방지)
-    tunnels = ngrok.get_tunnels()
-    
-    if not tunnels:
-        # 2. 터널이 없으면 새로 생성 (8501 포트 연결)
-        # 참고: 이전 단계에서 터미널에 토큰 인증을 마쳤다면 알아서 설정값을 불러옵니다.
-        public_url = ngrok.connect(8501)
-        print(f"🌍 앱 접속 URL (새로 생성됨): {public_url.public_url}")
-    else:
-        # 3. 이미 터널이 있다면 기존 URL 출력
-        print(f"🌍 앱 접속 URL (기존 유지): {tunnels[0].public_url}")
-    
-    # Streamlit 메인 함수 실행
     main()
